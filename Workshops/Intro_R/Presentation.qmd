@@ -1,0 +1,39 @@
+---
+title: "Introduction to R/R Studio"
+author: "Kyle Suelflow"
+format: revealjs
+---
+
+## Introduction to R/R Studio
+
+I am going to go briefly go through several topics today. There will be supplementary resources on each topic that I will link to on each slide.
+
+## Packages
+
+blah blah
+
+## Reading in Data
+
+blah blah
+
+## Data Cleaning/Wrangling
+
+blah blah
+
+## Making Visualizations
+
+blah blah
+
+## Advanced Viz
+
+blah blah
+
+#Spatial Viz
+
+#Q+A
+
+
+
+$$
+\beta_0
+$$

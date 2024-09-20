@@ -1,0 +1,27 @@
+##How can I use a dataset from another file in R?
+
+There are many functions you can use to read in data in R, depending upon what file type you have. Here are some examples of reading in data using the most common filetypes.
+
+##File paths
+
+Before we get into examples, we need to understand how to tell the computer where files are. Whenever you are using a function to read in data (such as `read_csv()`, `read_sheet()`, `read_excel`), you'll provide the function a filepath, telling the computer which file you want to have it parse into a data frame. There are a few important things to keep in mind here:
+- A file path is always a string (it has quotes around it), like "mydata.csv".
+- The file path can tell the computer what to do in two ways:
+  - first, we can give the "absolute file path". The string you would enter as your file path might look something like this: "/Users/kylesuelflow/Macalester-Stuff/R_Preceptor/Workshops/Intro_R/Supplementary_Materials"
+  - This is really long! *We don't need to do this!*
+  - Instead, use *relative file paths*
+  - Relative paths show the file path relative to where your working directory is. 
+  - How do I know where my working directory is?
+  - I would
+
+```{r}
+library(readr)
+library(ggplot2)
+read_csv()
+```
+
+
+```{r}
+getwd()
+```
+

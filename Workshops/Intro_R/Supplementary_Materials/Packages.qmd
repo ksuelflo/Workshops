@@ -1,0 +1,33 @@
+## What are R packages, and how do I use them?
+
+An R package is a collection of functions that are all related to each other, published into one package. You can think about all the R packages as books in a bookstore. In order to use one, you need to buy it first. 
+
+## Installing, an R package
+
+To "buy" an R package, we need to install it. You should use the "Console" pane to write the code to install packages. The Console is located on the bottom left of your screen.
+
+For example, if we wanted use the ggplot2 package for the first time, type the following code into the console:
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+```
+
+Now, we have "bought" the book. But it is now on our bookshelf, so we can't use it quite yet. To actually use the package, we need to "get it off the bookshelf". To do this, we will use the `library()` function:
+
+```{r, eval=FALSE}
+library(ggplot2)
+```
+
+Now we are all set! You can utilize any function from ggplot2 in your code. However, if you quit R Studio, this is effectively like putting the book back on the bookshelf. So the next time you open R Studio, *you need to run `library()` again*. 
+
+If you forget to do so, you'll encounter errors like this:
+
+[Error in theme() : could not find function "theme"]{style="color:red;"}
+
+Here, I tried to run the `theme()` function from the `ggplot2` package, but since I hadn't ran `library(ggplot2)` yet, it gives this error. 
+
+##Best practices
+
+In general, I would always put all your `library` statements at the top of your qmd file (or your .R, .rmd file). This keeps things organized, and allows you to quickly have access to all the packages you need whenever you reopen R Studio. 
+
+Make sure to never put `install.packages()` in a .qmd, .rmd, or .R file. Always run this in the console! If you try to render your file, and you have `install.packages()` somewhere in your file, it will give an error. 
