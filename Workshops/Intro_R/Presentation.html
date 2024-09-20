@@ -8,7 +8,7 @@
 <link href="Presentation_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="Presentation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="Presentation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.553">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Kyle Suelflow">
   <title>Introduction to R/R Studio</title>
@@ -156,8 +156,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -337,13 +336,27 @@ Kyle Suelflow
 </div>
 
 </section>
+<section id="setup" class="slide level2">
+<h2>Setup</h2>
+<ol type="1">
+<li>Open RStudio</li>
+</ol>
+<ul>
+<li>Open on Desktop if you have it</li>
+<li>Open up <a href="studio.macalester.edu">rstudio.macalester.edu</a> and log in with Mac credentials.</li>
+</ul>
+<ol start="2" type="1">
+<li><p>Download this <a href="Supplementary_Materials/Packages.qmd">template file</a>.</p></li>
+<li><p>Open the file in RStudio</p></li>
+</ol>
+<ul>
+<li>Click on the qmd and it will open on the Desktop version.</li>
+<li>Upload the qmd to the RStudio server.</li>
+</ul>
+</section>
 <section id="introduction-to-rr-studio" class="slide level2">
 <h2>Introduction to R/R Studio</h2>
-<p>blah blah</p>
-</section>
-<section id="quarto-template" class="slide level2">
-<h2>Quarto Template</h2>
-<p>blah blah</p>
+<p>I am going to go briefly go through several topics today. There will be supplementary resources on each topic that I will link to on each slide.</p>
 </section>
 <section id="packages" class="slide level2">
 <h2>Packages</h2>
@@ -366,10 +379,11 @@ Kyle Suelflow
 <p>blah blah</p>
 <p>#Spatial Viz</p>
 <p>#Q+A</p>
-<div class="quarto-auto-generated-content">
+<p><span class="math display">\[
+\beta_0
+\]</span></p>
 <div class="footer footer-default">
 
-</div>
 </div>
 </section>
     </div>
@@ -398,6 +412,7 @@ Kyle Suelflow
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -658,27 +673,10 @@ Kyle Suelflow
         // clear code selection
         e.clearSelection();
       });
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
-            }
-          }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -688,17 +686,8 @@ Kyle Suelflow
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -712,11 +701,7 @@ Kyle Suelflow
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
+          return note.innerHTML;
         });
       }
       const findCites = (el) => {
