@@ -4,9 +4,38 @@ author: "Kyle Suelflow"
 format: revealjs
 ---
 
+
+## Goals
+
+What I plan to cover:
+
+- Learn how to read in data
+
+
+What else are you interested in:
+
+[Pollev.com/ksuelflow](Pollev.com/ksuelflow)
+
+## Setup
+
+1. Open RStudio 
+
+-   Open on Desktop if you have it
+-   Open up [rstudio.macalester.edu](studio.macalester.edu) and log in with Mac credentials.
+
+2. Download this [template file](Supplementary_Materials/Packages.qmd). Save it in a folder called `RStudio_Workshop` on your `Desktop`.
+
+3. Open the file in RStudio 
+
+- Click on the qmd and it will open on the Desktop version.
+- Upload the qmd to the RStudio server.
+
+
 ## Introduction to R/R Studio
 
 I am going to go briefly go through several topics today. There will be supplementary resources on each topic that I will link to on each slide.
+
+[https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)
 
 ## Packages
 
@@ -18,22 +47,35 @@ blah blah
 
 ## Data Cleaning/Wrangling
 
-blah blah
+reproducible cleaning (leave raw data as is)
+
+using %>% as connect sequence of steps
+
+
+SQL-Like Verbs
+
+Six main verbs: filter, select, arrange, mutate, summarize, group_by
+
+Joins, Reshaping
+
+Resources: 112 notes, R for Data Science
 
 ## Making Visualizations
 
-blah blah
+Intro to ggplot()
 
 ## Advanced Viz
 
-blah blah
+Show fancy example
 
-#Spatial Viz
+Resources:
 
-#Q+A
+# Spatial Viz
+
+Show fancy example
+
+Resources:
+
+# Q+A
 
 
-
-$$
-\beta_0
-$$
