@@ -23,7 +23,7 @@ What else are you interested in:
 -   Open on Desktop if you have it
 -   Open up [rstudio.macalester.edu](studio.macalester.edu) and log in with Mac credentials.
 
-2. Download this [template file](Supplementary_Materials/Packages.qmd). Save it in a folder called `RStudio_Workshop` on your `Desktop`.
+2. Download this [template file](Supplementary_Materials/Template.qmd). Save it in a folder called `RStudio_Workshop` on your `Desktop`.
 
 3. Open the file in RStudio 
 

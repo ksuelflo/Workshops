@@ -97,7 +97,7 @@ Note: If you do not have these packages installed yet, please do so! Make sure t
 library(readr) #this package contains read_csv()
 library(googlesheets4) #this package contains read_sheet()
 library(readxl) #this package contains read_excel()
-library(readstata13) #this package contains read.dta13()
+#library(readstata13) #this package contains read.dta13()
 library(haven) #this package contains read_sav()
 ```
 
@@ -137,7 +137,7 @@ Please ensure you run the following code!:
 ```{r}
 library(dplyr)
 
-college <- read_csv("https://raw.githubusercontent.com/Mac-STAT/data/refs/heads/main/college.csv")
+college <- read_csv("https://mac-stat.github.io/data/college.csv")
 ```
 
 ## The Pipe (%>%)
@@ -147,7 +147,7 @@ The pipe, written as %>%, is an important piece of syntax, which you will see fr
 Take the following example:
 
 ```{r}
-4%>%
+4 %>%
   sqrt()%>%
   exp()
 
@@ -234,12 +234,20 @@ This function is used to *keep* only certain **columns** of our data.
 
 ```{r, eval=FALSE}
 #Example 1
-my_data%>%
+my_data %>%
   select(col1)
 
 #Example 2
-my_data%>%
+my_data %>%
   select(col1, col2, col5, col8)
+
+#Example 3 (shortcuts)
+my_data %>%
+  select(starts_with('bmi'))
+
+#instead of
+my_data %>%
+  select(bmi_1990, bmi_1995, bmi_2000, bmi_2005, bmi_2010)
 ```
 
 - To select only *1* column to keep, simply write in the name of the column, like in Example 1
@@ -248,7 +256,7 @@ my_data%>%
 For our `college` dataset, we might only care about the `Name` and `GradRate` columns. We can select only these 2 by doing the following:
 
 ```{r}
-college%>%
+college %>%
   select(Name, GradRate)
 ```
 
@@ -259,11 +267,11 @@ This function rearranges the rows of the data by a specified column. You can rea
 
 ```{r, eval=FALSE}
 #Lowest to highest (ascending)
-my_data%>%
+my_data %>%
   arrange(col1)
 
 #Highest to lowest (descending)
-my_data%>%
+my_data %>%
   arrange(desc(col1))
 ```
 
@@ -277,11 +285,17 @@ college%>%
 
 ### `summarize()` (or `summarise()`)
 
-This function is used to provide numerical summaries data. For example, if we wanted to show the mean, median, and standard deviation of a column outputted into *one* dataframe, we could use this code:
+This function is used to provide numerical summaries data. For example, if we wanted to show the mean, median, and standard deviation of a column outputted into *one* data frame, we could use this code:
 
 ```{r, eval= FALSE}
 my_data%>%
   summarize(mean_col1 = mean(col1), median_col1 = median(col1), sd_col1 = sd(col1))
+```
+
+```{r}
+# Note how the number of rows and columns change!
+college%>%
+  summarize(mean_rate = mean(GradRate))
 ```
 
 ### `group_by()`
@@ -289,10 +303,10 @@ my_data%>%
 This function is used to group the data into each of its categories
 - `group_by()` and `summarize()` are typically used in conjunction with eachother. 
 
-Lets say I wanted to find the mean Grad rate amongst colleges:
+Above we found the mean Grad rate amongst colleges:
 
 ```{r}
-college%>%
+college %>%
   summarize(mean_grad = mean(GradRate))
 ```
 
@@ -308,9 +322,9 @@ This is much better!
 
 ## Helpful tips
 
-- If you are wanting to save the output of your new data frame to a variable (using `varname <- data....`), I would recommend choosing a new name, that isn't what your original data is called.
+- If you are wanting to save the output of your new data frame to a variable (using `df_name <- data %>%....`), I would recommend choosing a new name, that isn't what your original data is called.
 - This way, you can easily go back to the original data if need be.
-- Make sure to give new columns appropiate/descriptive names!
+- Make sure to give new columns appropriate/descriptive names!
 
 ## Advanced Data Cleaning/Wrangling
 
@@ -341,6 +355,10 @@ class(college$GradRate)
 
 #character
 class(college$Name)
+
+# see all the classes of a data set
+str(college)
+
 ```
 
 - `GradRate` is numeric, meaning that we can do mathematical operations to it. 
@@ -373,18 +391,18 @@ library(ggplot2)
 
 To begin, let's discuss some different visualizations you can make, depending on the types and quantity of variables you are using
 
-- One Quantitative var
-  - Histogram (`geom_histogram()`)
-  - Density Plot (`geom_density()`)
-  - Box Plot (`geom_boxplot()`)
-- One Categorical var
-  - Bar plot (`geom_bar()`)
-- Two Quantitative var
-  - Scatter plot (`geom_point()`)
-- One Categorical, One Quantitative var
-  - Box Plot (`geom_boxplot()`)
-  - Grouped Histogram
-  - Overlayed Density plot
+- **One Quantitative var**
+  - Histogram (`geom_histogram(aes(x))`)
+  - Density Plot (`geom_density(aes(x))`)
+  - Box Plot (`geom_boxplot(aes(x))`)
+- **One Categorical var**
+  - Bar plot (`geom_bar(aes(x))`)
+- **Two Quantitative var**
+  - Scatter plot (`geom_point(aes(x,y))`)
+- **One Categorical, One Quantitative var**
+  - Box Plot (`geom_boxplot(aes(x,y))`)
+  - Overlayed Density plot (`geom_density(aes(x,fill))`)
+  - Violin plot (`geom_violin(aes(x,y))`)
 
 These are just a few to get us started. There are many more plots you can make!
 
@@ -395,7 +413,7 @@ This section goes through the code to create plots using `ggplot`.
 To begin, we need to use the `ggplot()` function:
 
 ```{r}
-college%>%
+college %>%
   ggplot()
 
 #Alternatively:
@@ -427,8 +445,9 @@ Some examples of different aesthetics.
 Lets say that I wanted to color the points by the type of college it is
 
 ```{r}
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE)
 ```
 
 Since color is an aesthetic, I'll use `color=Type` inside the `aes()` function.
@@ -440,8 +459,9 @@ Since color is an aesthetic, I'll use `color=Type` inside the `aes()` function.
 `scale_x_continuous()` is one way to do it: You can set the limits of your x axis (such as only showing points between .75 and 1 `AdmisRate`). You can also pick where the axis tick marks are, using `breaks=`
 
 ```{r}
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
   scale_x_continuous(limits = c(0.75,1), breaks = c(.75, .85, .95))
 ```
 
@@ -452,9 +472,17 @@ ggplot(data = college)+
 Below, I change the color palette using `scale_color_viridis_d()`
 
 ```{r}
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
   scale_color_viridis_d()
+
+
+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
+  scale_color_manual(values = c('red','blue','grey'))
 ```
 
 - How do I label my plots?
@@ -462,9 +490,10 @@ ggplot(data = college)+
 Use the `labs()` function!
 
 ```{r}
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
-  scale_color_viridis_d()+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
+  scale_color_viridis_d() +
   labs(title = "The Relationship Between College Admission Rates and Their Graduation Rates",
        subtitle = "Maybe add some useful context about the data, or data collection?",
        x = "Admissions Rate", 
@@ -480,8 +509,9 @@ By using `theme()`! There are a couple functions that will customize your plot f
 
 ```{r}
 #Theme_classic()
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
   scale_color_viridis_d()+
   labs(title = "The Relationship Between College Admission Rates and Their Graduation Rates",
        subtitle = "Maybe add some useful context about the data, or data collection?",
@@ -491,8 +521,9 @@ ggplot(data = college)+
   theme_classic()
 
 #Theme_minimal()
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
   scale_color_viridis_d()+
   labs(title = "The Relationship Between College Admission Rates and Their Graduation Rates",
        subtitle = "Maybe add some useful context about the data, or data collection?",
@@ -502,9 +533,10 @@ ggplot(data = college)+
   theme_minimal()
 
 #Manual theme()
-ggplot(data = college)+
-  geom_point(mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
-  scale_color_viridis_d()+
+ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))+
+  geom_point(alpha = 0.2) +
+  geom_smooth(se = FALSE) +
+  scale_color_viridis_d() +
   labs(title = "The Relationship Between College Admission Rates and Their Graduation Rates",
        subtitle = "Maybe add some useful context about the data, or data collection?",
        x = "Admissions Rate", 
