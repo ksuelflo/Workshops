@@ -35,6 +35,13 @@ What else are you interested in:
 - Click on the qmd and it will open on the Desktop version.
 - Upload the qmd to the RStudio server.
 
+## Quarto Documents
+
+Code + Text (styled with markdown)
+
+Similar to Rmd files
+
+Key Reason to use them: Reproducibility!!
 
 ## Introduction to R/R Studio
 
