@@ -1,7 +1,10 @@
 ---
 title: "Introduction to R/R Studio"
 author: "Kyle Suelflow"
-format: revealjs
+format: 
+  revealjs:
+    smaller: true
+    scrollable: true
 ---
 
 
@@ -20,8 +23,10 @@ What else are you interested in:
 
 1. Open RStudio 
 
--   Open on Desktop if you have it
--   Open up [rstudio.macalester.edu](studio.macalester.edu) and log in with Mac credentials.
+<br>
+
+  -   Open on Desktop if you have it
+  -   Open up [rstudio.macalester.edu](studio.macalester.edu) and log in with Mac credentials.
 
 2. Download this [template file](Supplementary_Materials/Template.qmd). Save it in a folder called `RStudio_Workshop` on your `Desktop`.
 
