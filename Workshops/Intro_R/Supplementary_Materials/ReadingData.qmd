@@ -4,24 +4,72 @@ There are many functions you can use to read in data in R, depending upon what f
 
 ##File paths
 
-Before we get into examples, we need to understand how to tell the computer where files are. Whenever you are using a function to read in data (such as `read_csv()`, `read_sheet()`, `read_excel`), you'll provide the function a filepath, telling the computer which file you want to have it parse into a data frame. There are a few important things to keep in mind here:
+Before we get into examples, we need to understand how to tell the computer where files are. 
+
+Whenever you are using a function to read in data (such as `read_csv()`, `read_sheet()`, `read_excel`), you'll provide the function a filepath, telling the computer which file you want to have it parse into a data frame. 
+
+There are a few important things to keep in mind here:
 - A file path is always a string (it has quotes around it), like "mydata.csv".
 - The file path can tell the computer what to do in two ways:
-  - first, we can give the "absolute file path". The string you would enter as your file path might look something like this: "/Users/kylesuelflow/Macalester-Stuff/R_Preceptor/Workshops/Intro_R/Supplementary_Materials"
-  - This is really long! *We don't need to do this!*
-  - Instead, use *relative file paths*
-  - Relative paths show the file path relative to where your working directory is. 
-  - How do I know where my working directory is?
-  - I would
+- first, we can give the "absolute file path". The string you would enter as your file path might look something like this: "/Users/kylesuelflow/Macalester-Stuff/STAT_155/data/mydata.csv"
+- This is really long! *We don't need to do this!*
+  
+```{r}
+
+```
+  
+  
+- Instead, use *relative file paths*
+- Relative paths show the file path relative to where your working directory is. 
+
+How do I know where my working directory is?
+ 
+- Use `getWd()` to get your working directory
+- Whenever you reload R Studio, always go to Session->Set Working Directory->To Source File location.
+- This sets your working directory relative to where your .rmd (or .R, .qmd, etc.) is located.
+
+What is the syntax for using relative paths?
+
+![File Paths](filepaths.png)
+
+- In the above folder structure, my code file is in the code folder, and my data set is in the data folder
+- Since my working directory is set to my code file, in order to access the data, we need to go *up* a folder
+- To do this, we'll use "../data"
+- The ".." is what moves us up a folder. The "/" gets us *inside* or *down* into the data folder
+
+- From here, we need to go access the data file in the data folder
+- We'll use another "/" to do this
+- The full file path is as follows: "../data/my_data.csv"
+  
+##Examples
+
+Note: If you do not have these packages installed yet, please do so!
 
 ```{r}
-library(readr)
-library(ggplot2)
-read_csv()
+library(readr) #this package contains read_csv()
+library(googlesheets4) #this package contains read_sheet()
+library(readxl) #this package contains read_excel()
+```
+
+```{r eval=FALSE}
+my_csv_data <- read_csv("./data/my_data.csv") 
+
+my_excel_data <- read_excel("../data/my_data/xls") #Also reads in .xlsx files.
+```
+
+Google sheets are a bit different, given that it is not a file path.
+
+What we need is the *sheet id*, which can be found here, highlighted in red:
+
+https://docs.google.com/spreadsheets/d/[1fdAxRjBw3k7gTTZtTd4usUpOev3f_TIN5meLQpE8aKk]{style="color:red;"}/edit?gid=0#gid=0
+
+You can specify which sheet to read in if you multiple sheets with the `sheet = ` argument. 
+
+```{r eval=FALSE}
+my_google_sheet_data <- read_sheet("1fdAxRjBw3k7gTTZtTd4usUpOev3f_TIN5meLQpE8aKk", sheet = ____)
 ```
 
 
-```{r}
-getwd()
-```
+
+
 

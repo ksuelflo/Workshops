@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kyle Suelflow">
+
+<title>Introduction to R/R Studio Supplementary Materials</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Template_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Template_files/libs/quarto-html/quarto.js"></script>
+<script src="Template_files/libs/quarto-html/popper.min.js"></script>
+<script src="Template_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Template_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Template_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Template_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Template_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Template_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Template_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#packages" id="toc-packages" class="nav-link active" data-scroll-target="#packages"><span class="header-section-number">1</span> Packages</a>
+  <ul class="collapse">
+  <li><a href="#what-are-r-packages-and-how-do-i-use-them" id="toc-what-are-r-packages-and-how-do-i-use-them" class="nav-link" data-scroll-target="#what-are-r-packages-and-how-do-i-use-them"><span class="header-section-number">1.1</span> What are R packages, and how do I use them?</a></li>
+  <li><a href="#installing-an-r-package" id="toc-installing-an-r-package" class="nav-link" data-scroll-target="#installing-an-r-package"><span class="header-section-number">1.2</span> Installing, an R package</a></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices"><span class="header-section-number">1.3</span> Best practices</a></li>
+  </ul></li>
+  <li><a href="#reading-in-data" id="toc-reading-in-data" class="nav-link" data-scroll-target="#reading-in-data"><span class="header-section-number">2</span> Reading in Data</a>
+  <ul class="collapse">
+  <li><a href="#how-can-i-use-a-dataset-from-another-file-in-r" id="toc-how-can-i-use-a-dataset-from-another-file-in-r" class="nav-link" data-scroll-target="#how-can-i-use-a-dataset-from-another-file-in-r"><span class="header-section-number">2.1</span> How can I use a dataset from another file in R?</a></li>
+  <li><a href="#file-paths" id="toc-file-paths" class="nav-link" data-scroll-target="#file-paths"><span class="header-section-number">2.2</span> File paths</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">2.3</span> Examples</a></li>
+  </ul></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">3</span> Data Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link" data-scroll-target="#the-pipe"><span class="header-section-number">3.1</span> The Pipe (%&gt;%)</a></li>
+  <li><a href="#important-functions" id="toc-important-functions" class="nav-link" data-scroll-target="#important-functions"><span class="header-section-number">3.2</span> 6 important functions</a>
+  <ul class="collapse">
+  <li><a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate"><code>mutate()</code></a></li>
+  <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter"><code>filter()</code></a></li>
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><code>select()</code></a></li>
+  <li><a href="#arrange" id="toc-arrange" class="nav-link" data-scroll-target="#arrange"><code>arrange()</code></a></li>
+  <li><a href="#summarize-or-summarise" id="toc-summarize-or-summarise" class="nav-link" data-scroll-target="#summarize-or-summarise"><code>summarize()</code> (or <code>summarise()</code>)</a></li>
+  <li><a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by"><code>group_by()</code></a></li>
+  </ul></li>
+  <li><a href="#helpful-tips" id="toc-helpful-tips" class="nav-link" data-scroll-target="#helpful-tips"><span class="header-section-number">3.3</span> Helpful tips</a></li>
+  <li><a href="#advanced-data-cleaningwrangling" id="toc-advanced-data-cleaningwrangling" class="nav-link" data-scroll-target="#advanced-data-cleaningwrangling"><span class="header-section-number">3.4</span> Advanced Data Cleaning/Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#class-of-variables" id="toc-class-of-variables" class="nav-link" data-scroll-target="#class-of-variables">Class of variables</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization"><span class="header-section-number">4</span> Data Visualization</a>
+  <ul class="collapse">
+  <li><a href="#ggplot-intro" id="toc-ggplot-intro" class="nav-link" data-scroll-target="#ggplot-intro"><span class="header-section-number">4.1</span> ggplot intro</a>
+  <ul class="collapse">
+  <li><a href="#faq" id="toc-faq" class="nav-link" data-scroll-target="#faq">FAQ</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://quarto.org/docs/authoring/markdown-basics.html"><i class="bi bi-link-45deg"></i>Quarto Markdown tips</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to R/R Studio Supplementary Materials</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kyle Suelflow </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="packages" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Packages</h1>
+<section id="what-are-r-packages-and-how-do-i-use-them" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="what-are-r-packages-and-how-do-i-use-them"><span class="header-section-number">1.1</span> What are R packages, and how do I use them?</h2>
+<p>An R package is a collection of functions that are all related to each other, published into one package. You can think about all the R packages as books in a bookstore. In order to use one, you need to buy it first.</p>
+</section>
+<section id="installing-an-r-package" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="installing-an-r-package"><span class="header-section-number">1.2</span> Installing, an R package</h2>
+<p>To “buy” an R package, we need to install it. You should use the “Console” pane to write the code to install packages. The Console is located on the bottom left of your screen.</p>
+<p>For example, if we wanted use the ggplot2 package for the first time, type the following code into the console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we have “bought” the book. But it is now on our bookshelf, so we can’t use it quite yet. To actually use the package, we need to “get it off the bookshelf”. To do this, we will use the <code>library()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we are all set! You can utilize any function from ggplot2 in your code. However, if you quit R Studio, this is effectively like putting the book back on the bookshelf. So the next time you open R Studio, <strong>you need to run <code>library()</code> again</strong>.</p>
+<p>If you forget to do so, you’ll encounter errors like this:</p>
+<p><span style="color:red;">Error in theme() : could not find function “theme”</span></p>
+<p>Here, I tried to run the <code>theme()</code> function from the <code>ggplot2</code> package, but since I hadn’t ran <code>library(ggplot2)</code> yet, it gives this error.</p>
+</section>
+<section id="best-practices" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="best-practices"><span class="header-section-number">1.3</span> Best practices</h2>
+<p>In general, I would always put all your <code>library</code> statements at the top of your qmd file (or your .R, .rmd file). This keeps things organized, and allows you to quickly have access to all the packages you need whenever you reopen R Studio.</p>
+<p>Make sure to never put <code>install.packages()</code> in a .qmd, .rmd, or .R file. Always run this in the console! If you try to render your file, and you have <code>install.packages()</code> somewhere in your file, it will give an error.</p>
+</section>
+</section>
+<section id="reading-in-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Reading in Data</h1>
+<section id="how-can-i-use-a-dataset-from-another-file-in-r" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="how-can-i-use-a-dataset-from-another-file-in-r"><span class="header-section-number">2.1</span> How can I use a dataset from another file in R?</h2>
+<p>There are many functions you can use to read in data in R, depending upon what file type you have. Here are some examples of reading in data using the most common filetypes.</p>
+</section>
+<section id="file-paths" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="file-paths"><span class="header-section-number">2.2</span> File paths</h2>
+<p>Before we get into examples, we need to understand how to tell the computer where files are.</p>
+<p>Whenever you are using a function to read in data (such as <code>read_csv()</code>, <code>read_sheet()</code>, <code>read_excel</code>), you’ll provide the function a filepath, telling the computer which file you want to have it parse into a data frame.</p>
+<p>There are a few important things to keep in mind here:</p>
+<ul>
+<li><p>A file path is always a string (it has quotes around it), like “mydata.csv”.</p></li>
+<li><p>The file path can tell the computer what to do in two ways:</p></li>
+<li><p>first, we can give the “absolute file path”. The string you would enter as your file path might look something like this: “/Users/kylesuelflow/Macalester-Stuff/STAT_155/data/mydata.csv”</p></li>
+<li><p>This is really long! <em>We don’t need to do this!</em></p></li>
+<li><p>Instead, use <em>relative file paths</em></p></li>
+<li><p>Relative paths show the file path relative to where your working directory is.</p></li>
+</ul>
+<p>How do I know where my working directory is?</p>
+<ul>
+<li>Use <code>getWd()</code> to get your working directory</li>
+<li>Whenever you reload R Studio, always go to Session-&gt;Set Working Directory-&gt;To Source File location.</li>
+<li>This sets your working directory relative to where your .rmd (or .R, .qmd, etc.) is located.</li>
+</ul>
+<p>What is the syntax for using relative paths?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="filepaths.png" height="350" class="figure-img"></p>
+<figcaption>File Paths</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>In the above folder structure, my code file is in the code folder, and my data set is in the data folder</p></li>
+<li><p>Since my working directory is set to my code file, in order to access the data, we need to go <em>up</em> a folder</p></li>
+<li><p>To do this, we’ll use “../data”</p></li>
+<li><p>The “..” is what moves us up a folder. The “/” gets us <em>inside</em> or <em>down</em> into the data folder</p></li>
+<li><p>From here, we need to go access the data file in the data folder</p></li>
+<li><p>We’ll use another “/” to do this</p></li>
+<li><p>The full file path is as follows: “../data/my_data.csv”</p></li>
+</ul>
+</section>
+<section id="examples" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="examples"><span class="header-section-number">2.3</span> Examples</h2>
+<p>Note: If you do not have these packages installed yet, please do so! Make sure to run this chunk once all packages are installed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co">#this package contains read_csv()</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4) <span class="co">#this package contains read_sheet()</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co">#this package contains read_excel()</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readstata13) <span class="co">#this package contains read.dta13()</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven) <span class="co">#this package contains read_sav()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_csv_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/my_data.csv"</span>) <span class="co">#read csv files</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>my_excel_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/my_data.xls"</span>) <span class="co">#Also reads in .xlsx files</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>my_stata_data <span class="ot">&lt;-</span> <span class="fu">read.dta13</span>(<span class="st">"../data/my_data.dta"</span>) <span class="co">#read stata files</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>my_SPSS_data <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"../data/my_data.sav"</span>) <span class="co">#read SPSS files</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Google sheets are a bit different, given that it is not a file path.</p>
+<p>What we need is the <em>sheet id</em>, which can be found here, highlighted in red:</p>
+<p>https://docs.google.com/spreadsheets/d/<span style="color:red;">1fdAxRjBw3k7gTTZtTd4usUpOev3f_TIN5meLQpE8aKk</span>/edit?gid=0#gid=0</p>
+<p>You can specify which sheet to read in if you multiple sheets with the <code>sheet =</code> argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_google_sheet_data <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"1fdAxRjBw3k7gTTZtTd4usUpOev3f_TIN5meLQpE8aKk"</span>, <span class="at">sheet =</span> ____)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="data-wrangling" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data Wrangling</h1>
+<p>Now that we have our data in R Studio, we can start doing things with it!</p>
+<p>There are far too many things to cover in this brief document, so feel free to check out Prof.&nbsp;Brianna Heggeseth’s Introduction to Data Science notes <a href="https://bcheggeseth.github.io/112_fall_2023/" class="uri">https://bcheggeseth.github.io/112_fall_2023/</a></p>
+<p>Throughout the rest of this document, we will be referring to the <code>college</code> dataset, downloaded from github.</p>
+<p>Please ensure you run the following code!:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/Mac-STAT/data/refs/heads/main/college.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1651 Columns: 4</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): Name, Type
+dbl (2): AdmisRate, GradRate
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<section id="the-pipe" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-pipe"><span class="header-section-number">3.1</span> The Pipe (%&gt;%)</h2>
+<p>The pipe, written as %&gt;%, is an important piece of syntax, which you will see frequently from here on out. It means to “take the value of the previous function and feed it into the next function”.</p>
+<p>Take the following example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span><span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.389056</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The same code, written differently</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">sqrt</span>(<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.389056</code></pre>
+</div>
+</div>
+<p>Here, we take the output of the previous function (which is just 4), and plug it into the next function, <code>sqrt()</code>. Then, the output from <code>sqrt()</code> gets put into <code>exp()</code>.</p>
+<p>We use the pipe because it is much cleaner code. You can imagine for a more complex task, attempting to not use the pipe will result in confusing, hard to follow code.</p>
+<p>Another resource to further explain: <a href="https://faculty.washington.edu/otoomet/machinelearning-R/pipes-dplyr.html">University of Washington Resource</a></p>
+</section>
+<section id="important-functions" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="important-functions"><span class="header-section-number">3.2</span> 6 important functions</h2>
+<p>Now that we know the pipe operator, we can get into several functions that will be useful when wrangling and cleaning your data.</p>
+<section id="mutate" class="level3">
+<h3 class="anchored" data-anchor-id="mutate"><code>mutate()</code></h3>
+<p>This function creates a new column (or modifies an existing one) in your dataset. The syntax is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>your_data<span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_column_name =</span> contents_of_new_column)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For example, with our <code>college</code> dataset, we might want to create a new column, which indicates whether the <code>GradRate</code> is above or below 50%.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grad_rate_above_50 =</span> GradRate <span class="sc">&gt;</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,651 × 5
+   Name                              Type  AdmisRate GradRate grad_rate_above_50
+   &lt;chr&gt;                             &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt;             
+ 1 Alabama A &amp; M University          Publ…     0.684    0.127 FALSE             
+ 2 University of Alabama at Birming… Publ…     0.867    0.444 FALSE             
+ 3 University of Alabama in Huntsvi… Publ…     0.781    0.390 FALSE             
+ 4 Alabama State University          Publ…     0.966    0.136 FALSE             
+ 5 The University of Alabama         Publ…     0.801    0.548 TRUE              
+ 6 Auburn University at Montgomery   Publ…     0.922    0.145 FALSE             
+ 7 Auburn University                 Publ…     0.437    0.558 TRUE              
+ 8 Birmingham-Southern College       Priv…     0.572    0.585 TRUE              
+ 9 Faulkner University               Priv…     0.824    0.214 FALSE             
+10 Herzing University-Birmingham     Priv…     0.941    0     FALSE             
+# ℹ 1,641 more rows</code></pre>
+</div>
+</div>
+<p><strong>NOTE</strong> The above code does not <em>modify</em> the <code>college</code> dataset. If we wanted to do that, we could do something like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>college_2 <span class="ot">&lt;-</span> college<span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grad_rate_above_50 =</span> GradRate <span class="sc">&gt;</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, we are assigning the output to <code>college_2</code>. <code>college</code> does not include our new column, but <code>college_2</code> does.</p>
+</section>
+<section id="filter" class="level3">
+<h3 class="anchored" data-anchor-id="filter"><code>filter()</code></h3>
+<p>This function is used to <em>keep</em> only certain <strong>rows</strong> which satisfy a condition. The syntax is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>your_data<span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(column_name <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are several operators we can use to filter our data:</p>
+<ul>
+<li>less than: <code>&lt;</code></li>
+<li>greater than: <code>&gt;</code></li>
+<li>greater than or equal to: <code>&gt;=</code></li>
+<li>less than or equal to: <code>&lt;=</code></li>
+<li>equal to: <code>==</code></li>
+<li>OR operator: <code>|</code></li>
+<li>AND operator: <code>&amp;</code></li>
+<li>not equal to: <code>!=</code></li>
+<li>Negating (Not) operator: <code>!</code></li>
+<li>if we want to filter for multiple things (say we wanted to keep only rows in which the state name was “Hawaii” or “Alaska”), we’d use the <code>%in%</code> operator. Example:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Hawaii"</span>, <span class="st">"Alaska"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>the <code>c()</code> function organizes multiple objects into a vector, which we must do in order to use <code>%in%</code>.</p>
+<p>For the <code>college</code> data, we might want to keep only colleges that are Type “Public”:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Type <span class="sc">==</span> <span class="st">"Public"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 540 × 4
+   Name                                Type   AdmisRate GradRate
+   &lt;chr&gt;                               &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+ 1 Alabama A &amp; M University            Public     0.684    0.127
+ 2 University of Alabama at Birmingham Public     0.867    0.444
+ 3 University of Alabama in Huntsville Public     0.781    0.390
+ 4 Alabama State University            Public     0.966    0.136
+ 5 The University of Alabama           Public     0.801    0.548
+ 6 Auburn University at Montgomery     Public     0.922    0.145
+ 7 Auburn University                   Public     0.437    0.558
+ 8 Jacksonville State University       Public     0.785    0.309
+ 9 University of West Alabama          Public     0.689    0.286
+10 University of Montevallo            Public     0.598    0.402
+# ℹ 530 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="select" class="level3">
+<h3 class="anchored" data-anchor-id="select"><code>select()</code></h3>
+<p>This function is used to <em>keep</em> only certain <strong>columns</strong> of our data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Example 1</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(col1)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Example 2</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(col1, col2, col5, col8)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>To select only <em>1</em> column to keep, simply write in the name of the column, like in Example 1</li>
+<li>To select more than 1 column to keep, just separate each column name by comma, like in Example 2</li>
+</ul>
+<p>For our <code>college</code> dataset, we might only care about the <code>Name</code> and <code>GradRate</code> columns. We can select only these 2 by doing the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, GradRate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,651 × 2
+   Name                                GradRate
+   &lt;chr&gt;                                  &lt;dbl&gt;
+ 1 Alabama A &amp; M University               0.127
+ 2 University of Alabama at Birmingham    0.444
+ 3 University of Alabama in Huntsville    0.390
+ 4 Alabama State University               0.136
+ 5 The University of Alabama              0.548
+ 6 Auburn University at Montgomery        0.145
+ 7 Auburn University                      0.558
+ 8 Birmingham-Southern College            0.585
+ 9 Faulkner University                    0.214
+10 Herzing University-Birmingham          0    
+# ℹ 1,641 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="arrange" class="level3">
+<h3 class="anchored" data-anchor-id="arrange"><code>arrange()</code></h3>
+<p>This function rearranges the rows of the data by a specified column. You can rearrange from highest to lowest, or lowest to highest.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lowest to highest (ascending)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(col1)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Highest to lowest (descending)</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(col1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Say that we wanted to know which Colleges had the highest GradRates. One way to do this is to arrange, in descending order, the <code>GradRate</code> variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(GradRate))<span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, GradRate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,651 × 2
+   Name                                            GradRate
+   &lt;chr&gt;                                              &lt;dbl&gt;
+ 1 Dharma Realm Buddhist University                       1
+ 2 Stevens-The Institute of Business &amp; Arts               1
+ 3 Pacific Islands University                             1
+ 4 Joyce University of Nursing and Health Sciences        1
+ 5 Herzing University-Brookfield                          1
+ 6 Chamberlain University-Virginia                        1
+ 7 Chamberlain University-Georgia                         1
+ 8 Chamberlain University-Indiana                         1
+ 9 Chamberlain University-Michigan                        1
+10 Chamberlain University-North Carolina                  1
+# ℹ 1,641 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="summarize-or-summarise" class="level3">
+<h3 class="anchored" data-anchor-id="summarize-or-summarise"><code>summarize()</code> (or <code>summarise()</code>)</h3>
+<p>This function is used to provide numerical summaries data. For example, if we wanted to show the mean, median, and standard deviation of a column outputted into <em>one</em> dataframe, we could use this code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>my_data<span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_col1 =</span> <span class="fu">mean</span>(col1), <span class="at">median_col1 =</span> <span class="fu">median</span>(col1), <span class="at">sd_col1 =</span> <span class="fu">sd</span>(col1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="group_by" class="level3">
+<h3 class="anchored" data-anchor-id="group_by"><code>group_by()</code></h3>
+<p>This function is used to group the data into each of its categories - <code>group_by()</code> and <code>summarize()</code> are typically used in conjunction with eachother.</p>
+<p>Lets say I wanted to find the mean Grad rate amongst colleges:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_grad =</span> <span class="fu">mean</span>(GradRate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  mean_grad
+      &lt;dbl&gt;
+1     0.434</code></pre>
+</div>
+</div>
+<p>This is nice, but what if we found the mean GradRate amongst each Type of college?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Type)<span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_grad =</span> <span class="fu">mean</span>(GradRate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Type               mean_grad
+  &lt;chr&gt;                  &lt;dbl&gt;
+1 Private for-profit     0.417
+2 Private nonprofit      0.470
+3 Public                 0.366</code></pre>
+</div>
+</div>
+<p>This is much better!</p>
+</section>
+</section>
+<section id="helpful-tips" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="helpful-tips"><span class="header-section-number">3.3</span> Helpful tips</h2>
+<ul>
+<li>If you are wanting to save the output of your new data frame to a variable (using <code>varname &lt;- data....</code>), I would recommend choosing a new name, that isn’t what your original data is called.</li>
+<li>This way, you can easily go back to the original data if need be.</li>
+<li>Make sure to give new columns appropiate/descriptive names!</li>
+</ul>
+</section>
+<section id="advanced-data-cleaningwrangling" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="advanced-data-cleaningwrangling"><span class="header-section-number">3.4</span> Advanced Data Cleaning/Wrangling</h2>
+<p>I won’t get into all the details, but here are some useful resources for more advanced cleaning/wrangling:</p>
+<ul>
+<li>If working with <strong>dates</strong>, the <code>lubridate</code> package is super useful.
+<ul>
+<li>Extracting the year, month, day, etc. from a <code>date</code> variable takes just one function!</li>
+<li>Lubridate <a href="https://r4ds.had.co.nz/dates-and-times.html">In Depth Resource</a></li>
+<li>Lubridate <a href="https://library.virginia.edu/data/articles/working-with-dates-and-time-in-r-using-the-lubridate-package">Shorter Resource</a></li>
+<li>Lubridate <a href="https://rawgit.com/rstudio/cheatsheets/main/lubridate.pdf">Cheat sheet</a></li>
+</ul></li>
+<li>String Parsing
+<ul>
+<li>Data is often really messy. Maybe we want detect whether a pattern appears in a variable. Or remove all the spaces in a column.</li>
+<li>You can do all of this an more with the <code>stringr</code> package!</li>
+<li>Stringr <a href="https://r4ds.had.co.nz/strings.html">In Depth Resource</a></li>
+<li>Stringr <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">Cheat sheet</a></li>
+</ul></li>
+</ul>
+<section id="class-of-variables" class="level3">
+<h3 class="anchored" data-anchor-id="class-of-variables">Class of variables</h3>
+<p>The class of a variable is super important. - If I want to do mathematical operations to a variable, but it is of a “character” class, I’ll get an error! - For the lubridate package, you’ll want to make sure your date variable is a “Date” class.</p>
+<p>To find the class of something, use the <code>class()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#numeric</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(college<span class="sc">$</span>GradRate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#character</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(college<span class="sc">$</span>Name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<ul>
+<li><code>GradRate</code> is numeric, meaning that we can do mathematical operations to it.</li>
+<li><code>Name</code> is a character class.</li>
+<li>There are functions that return a boolean (TRUE/FALSE) depending on the class of the object
+<ul>
+<li><code>is.numeric()</code> returns TRUE if the object is a numeric class.</li>
+<li><code>is.character()</code> returns TRUE if the object is a character class.</li>
+</ul></li>
+<li>You can also coerce objects into different classes, assuming that the underlying data supports this.
+<ul>
+<li>If I wanted to turn a numeric object into a character class object, I could use <code>as.character()</code>.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GradRate =</span> <span class="fu">as.character</span>(GradRate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,651 × 4
+   Name                                Type              AdmisRate GradRate
+   &lt;chr&gt;                               &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;   
+ 1 Alabama A &amp; M University            Public                0.684 0.1268  
+ 2 University of Alabama at Birmingham Public                0.867 0.4445  
+ 3 University of Alabama in Huntsville Public                0.781 0.3898  
+ 4 Alabama State University            Public                0.966 0.1365  
+ 5 The University of Alabama           Public                0.801 0.5482  
+ 6 Auburn University at Montgomery     Public                0.922 0.1452  
+ 7 Auburn University                   Public                0.437 0.5585  
+ 8 Birmingham-Southern College         Private nonprofit     0.572 0.5854  
+ 9 Faulkner University                 Private nonprofit     0.824 0.2145  
+10 Herzing University-Birmingham       Private nonprofit     0.941 0       
+# ℹ 1,641 more rows</code></pre>
+</div>
+</div>
+<p>This is an example of using <code>mutate()</code> to modify an existing column, rather than creating a new one.</p>
+<p>Some functions require arguments to be of a certain class. Using these tools will help you solve any issues you encounter relating to the class of an object.</p>
+</section>
+</section>
+</section>
+<section id="data-visualization" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Data Visualization</h1>
+<p>Visualizing your data is super important to help communicate the story you want to tell.</p>
+<p>We’ll use the <code>ggplot2</code> package to do this: Be sure to install it using <code>install.packages("ggplot2")</code> in the console if you haven’t already.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To begin, let’s discuss some different visualizations you can make, depending on the types and quantity of variables you are using</p>
+<ul>
+<li>One Quantitative var
+<ul>
+<li>Histogram (<code>geom_histogram()</code>)</li>
+<li>Density Plot (<code>geom_density()</code>)</li>
+<li>Box Plot (<code>geom_boxplot()</code>)</li>
+</ul></li>
+<li>One Categorical var
+<ul>
+<li>Bar plot (<code>geom_bar()</code>)</li>
+</ul></li>
+<li>Two Quantitative var
+<ul>
+<li>Scatter plot (<code>geom_point()</code>)</li>
+</ul></li>
+<li>One Categorical, One Quantitative var
+<ul>
+<li>Box Plot (<code>geom_boxplot()</code>)</li>
+<li>Grouped Histogram</li>
+<li>Overlayed Density plot</li>
+</ul></li>
+</ul>
+<p>These are just a few to get us started. There are many more plots you can make!</p>
+<section id="ggplot-intro" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="ggplot-intro"><span class="header-section-number">4.1</span> ggplot intro</h2>
+<p>This section goes through the code to create plots using <code>ggplot</code>.</p>
+<p>To begin, we need to use the <code>ggplot()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>college<span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Alternatively:</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We have created a sort of base layer, a coordinate system, for our plot. It isn’t very interesting because we haven’t added any <strong>layers</strong></p>
+<p>Lets add some layers, and in the process investigate the relationship between <code>GradRate</code> and <code>AdmisRate</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Some things to point out code-wise: - Notice the <code>+</code> after <code>ggplot()</code>. To add a new layer, we must put a <code>+</code> at the end of the previous layer. - The <code>mapping =</code> argument is where we use the <code>aes()</code> function. This maps different aesthetics to variables</p>
+<p>Some examples of different aesthetics. - x var - y var - color - size - shape - fill</p>
+<p>Lets say that I wanted to color the points by the type of college it is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Since color is an aesthetic, I’ll use <code>color=Type</code> inside the <code>aes()</code> function.</p>
+<section id="faq" class="level3">
+<h3 class="anchored" data-anchor-id="faq">FAQ</h3>
+<ul>
+<li>How do I change the scales of my x and/or y axis?</li>
+</ul>
+<p><code>scale_x_continuous()</code> is one way to do it: You can set the limits of your x axis (such as only showing points between .75 and 1 <code>AdmisRate</code>). You can also pick where the axis tick marks are, using <code>breaks=</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))<span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.75</span>,<span class="dv">1</span>), <span class="at">breaks =</span> <span class="fu">c</span>(.<span class="dv">75</span>, .<span class="dv">85</span>, .<span class="dv">95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 750 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>How do I change the colors of my plot?
+<ul>
+<li>There are many color palettes in different packages in R. You can also manually make a scale using <code>scale_fill_manual()</code>/<code>scale_color_manual()</code></li>
+<li><code>scale_fill_viridis()</code> is an example of a great color palette (Color blind friendly!) from the <code>viridis</code> package.</li>
+</ul></li>
+</ul>
+<p>Below, I change the color palette using <code>scale_color_viridis_d()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))<span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>How do I label my plots?</li>
+</ul>
+<p>Use the <code>labs()</code> function!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))<span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()<span class="sc">+</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Relationship Between College Admission Rates and Their Graduation Rates"</span>,</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Maybe add some useful context about the data, or data collection?"</span>,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Admissions Rate"</span>, </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Graduation Rate"</span>,</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Type of College"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice that I can label the legend created from the <code>color =</code> aesthetic as well.</p>
+<p>-How can I customize my plot?</p>
+<p>By using <code>theme()</code>! There are a couple functions that will customize your plot for you: <code>theme_classic()</code>, <code>theme_minimal()</code>, etc. But you can also manually customize your plot using <code>theme()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Theme_classic()</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))<span class="sc">+</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()<span class="sc">+</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Relationship Between College Admission Rates and Their Graduation Rates"</span>,</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Maybe add some useful context about the data, or data collection?"</span>,</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Admissions Rate"</span>, </span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Graduation Rate"</span>,</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Type of College"</span>)<span class="sc">+</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Theme_minimal()</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))<span class="sc">+</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()<span class="sc">+</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Relationship Between College Admission Rates and Their Graduation Rates"</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Maybe add some useful context about the data, or data collection?"</span>,</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Admissions Rate"</span>, </span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Graduation Rate"</span>,</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Type of College"</span>)<span class="sc">+</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-30-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Manual theme()</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> college)<span class="sc">+</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> AdmisRate, <span class="at">y =</span> GradRate, <span class="at">color =</span> Type))<span class="sc">+</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()<span class="sc">+</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Relationship Between College Admission Rates and Their Graduation Rates"</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Maybe add some useful context about the data, or data collection?"</span>,</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Admissions Rate"</span>, </span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Graduation Rate"</span>,</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Type of College"</span>)<span class="sc">+</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line.x =</span> <span class="fu">element_line</span>(),</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(),</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Template_files/figure-html/unnamed-chunk-30-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
