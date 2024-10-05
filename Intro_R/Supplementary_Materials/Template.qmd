@@ -13,6 +13,10 @@ format:
 
 # Packages
 
+Before we get any further, one thing to note:
+
+If you see `eval=FALSE` in a code chunk, ***do not run the chunk***. The code in there is for demonstration purposes only. 
+
 ## What are R packages, and how do I use them?
 
 An R package is a collection of functions that are all related to each other, published into one package. You can think about all the R packages as books in a bookstore. In order to use one, you need to buy it first. 
@@ -549,4 +553,19 @@ ggplot(data = college, mapping = aes(x = AdmisRate, y = GradRate, color = Type))
         panel.background = element_blank())
 ```
 
+# Modeling
+
+A brief look at how to run a couple different models in R
+
+```{r, eval=FALSE}
+lm(y ~ X1+X2, data) #Linear model with 2 explanatory variables, X1 and X2, and response variable, y.
+
+lm(y~X1*X2, data) #interaction
+
+glm(y ~ X1+X2, data, family = ‘binomial’) #
+
+glm(y ~ X1*X2, data, family = ‘binomial’) #interaction
+```
+
+If your data aren’t independent (over time or space), you need more complex models, which are developed as separate R packages. 
 

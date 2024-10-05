@@ -10,14 +10,17 @@ format:
 
 ## Goals
 
-What I plan to cover:
+Topics we'll cover:
 
-- Learn how to read in data
+- Installing/loading R packages
+- Reading in data
+- Cleaning/wrangling data
+- Visualizing data
 
 
 What else are you interested in:
 
-[Pollev.com/ksuelflow](Pollev.com/ksuelflow)
+[https://pollev.com/kylesuelflow774](https://pollev.com/kylesuelflow774)
 
 ## Setup
 
@@ -45,49 +48,10 @@ Key Reason to use them: Reproducibility!!
 
 ## Introduction to R/R Studio
 
-I am going to go briefly go through several topics today. There will be supplementary resources on each topic that I will link to on each slide.
+- Walkthrough of QMD template file
+- Feel free to take notes, add things, etc. This is **your** note sheet!
+- The link below is to a site with a number of cheatsheets. Super useful
 
 [https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)
-
-## Packages
-
-blah blah
-
-## Reading in Data
-
-blah blah
-
-## Data Cleaning/Wrangling
-
-reproducible cleaning (leave raw data as is)
-
-using %>% as connect sequence of steps
-
-
-SQL-Like Verbs
-
-Six main verbs: filter, select, arrange, mutate, summarize, group_by
-
-Joins, Reshaping
-
-Resources: 112 notes, R for Data Science
-
-## Making Visualizations
-
-Intro to ggplot()
-
-## Advanced Viz
-
-Show fancy example
-
-Resources:
-
-# Spatial Viz
-
-Show fancy example
-
-Resources:
-
-# Q+A
 
 
