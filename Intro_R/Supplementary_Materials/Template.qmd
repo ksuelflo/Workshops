@@ -11,6 +11,12 @@ format:
         href: https://quarto.org/docs/authoring/markdown-basics.html
 ---
 
+
+```{r}
+lm(y ~ var1*var2)
+```
+
+
 # Packages
 
 Before we get any further, one thing to note:
@@ -155,6 +161,8 @@ Take the following example:
   sqrt()%>%
   exp()
 
+
+filter(a>b & c>d)
 #The same code, written differently
 exp(sqrt(4))
 ```
@@ -176,6 +184,7 @@ This function creates a new column (or modifies an existing one) in your dataset
 ```{r, eval=FALSE}
 your_data%>%
   mutate(new_column_name = contents_of_new_column)
+
 ```
 
 For example, with our `college` dataset, we might want to create a new column, which indicates whether the `GradRate` is above or below 50%.
