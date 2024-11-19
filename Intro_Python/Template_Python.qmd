@@ -1,0 +1,267 @@
+---
+title: "Introduction to Python Supplementary Materials"
+author: "Kyle Suelflow"
+number-sections: true
+number-depth: 2
+format:
+  html:
+    toc: true
+    other-links:
+      - text: Quarto Markdown tips
+        href: https://quarto.org/docs/authoring/markdown-basics.html
+---
+
+#Setup
+
+Copy and run the following code in the console:
+```{r, eval = FALSE}
+install.packages("reticulate")
+reticulate::install_miniconda()
+py_install(packages = c("matplotlib", "pandas", "numpy", "seaborn", "statsmodels", "scikit-learn"))
+```
+
+Load in libraries/packages
+```{r}
+#Python stuff
+library(reticulate)
+
+#R stuff
+library(tidyverse)
+```
+
+These are similar to the `library` command in R.
+```{python}
+import numpy as np
+
+# Load in pandas library
+import pandas as pd
+
+# Load in matplotlib library
+import matplotlib 
+matplotlib.use("Agg", force=True)
+import matplotlib.pyplot as plt
+```
+
+#General Tips
+
+##Console
+
+To run an interactive session of python in the console, run `reticulate::repl_python()` in the console. To switch back to R, you'll just type `exit` into the console.
+
+##Code chunks
+
+If you are running code in both python chunks and R chunks, you can pass objects back and forth using the following syntax:
+
+```{r, eval = FALSE}
+py$data_from_python
+```
+
+```{python, eval = FALSE}
+r.data_from_r
+```
+
+##Python Syntax
+
+Python is an object oriented language. Instead of using the `%>%` pipe, you'll use a `.`. 
+
+Prof. Heggeseth made this wonderful document comparing Python and R syntax. This is going to be super useful! [Google Doc](https://docs.google.com/document/d/1_fXhCk6oMYtPrOh7O9MW02fkcEEGn1_p88Ihtepz8JU/edit?tab=t.0#heading=h.rrlhanyhunle)
+
+#Example
+
+We are going to explore various Python libraries by working through an example Data Analysis from start to finish. In addition to the new Python code, the corresponding R code will be provided too. At the bottom, there will be a bit about each package, and what each does.
+
+To start, download this csv file: 
+
+```{r}
+homes <- read_csv("https://mac-stat.github.io/data/homes.csv")
+```
+
+```{python}
+import pandas as pd
+homes = pd.read_csv("homes.csv")
+```
+
+We'll first explore the six main verbs from `dplyr` (mutate, filter, arrange, select, group_by, summarize). In R, we can use these verbs by running the following code:
+
+```{r}
+#Adding A column that calculates the Price per room (mutate)
+homes <- homes%>%
+  mutate(Price_per_room = Price/Rooms)
+
+#Keeping rows that only have 2 or more bathrooms (filter)
+homes %>%
+  filter(Bathrooms >= 2)
+
+#Ordering the data set based upon the Price of the home, from highest to lowest (arrange)
+homes%>%
+  arrange(desc(Price))
+
+#Selecting only Price, Rooms, and Bathrooms (select)
+homes%>%
+  select(Price, Rooms, Bathrooms, Price_per_room)
+
+#Finding the average home price of homes with and without central air (group_by, summarize)
+homes%>%
+  group_by(Central.Air)%>%
+  summarize(avg_home_price = mean(Price))
+```
+
+We'll accomplish the same 5 goals as above, now using Pandas in Python.
+
+```{python}
+#Adding A column that calculates the Price per room (mutate)
+homes["Price_per_room"] = np.divide(homes["Price"], homes["Rooms"])
+
+#Keeping rows that only have 2 or more bathrooms (filter)
+homes[homes["Bathrooms"] >= 2]
+
+#Ordering the data set based upon the Price of the home, from highest to lowest (arrange)
+homes.sort_values(["Price"], ascending = False)
+
+#Selecting only Price, Rooms, and Bathrooms (select)
+homes[["Price", "Rooms", "Bathrooms", "Price_per_room"]]
+
+#Finding the average home price of homes with and without central air (group_by, summarize)
+homes["Price"].groupby(homes["Central.Air"]).mean()
+
+```
+
+Some things to notice
+- A lot of brackets! This is a list in Python
+- A lot of Quotation marks! This is how you can refer to a variable/column. Using `name_df["Column name"]`
+- The `group_by` syntax is a bit different. We first list the variable we'll be doing an aggregation over (the mean, in this case), and then we group by. This is the opposite of `group_by` in R. 
+
+Again, do utilize this [guide](https://docs.google.com/document/d/1_fXhCk6oMYtPrOh7O9MW02fkcEEGn1_p88Ihtepz8JU/edit?tab=t.0#heading=h.rrlhanyhunle)!
+
+If you need to translate Python code to R (because you are more familiar with R, etc.), or if you need to write some Python code, just use ChatGPT! Copy and paste the R code above, and add the following prompt: "translate this R code to Python". You'll get virtually the exact same code as the python code above.
+
+Before we make some plots, lets imagine that you are working with a python script that outputs some data, but that you want to do the wrangling/cleaning/analysis in R. Here is how you can save a `pandas` `DataFrame` object to csv (or any other file type):
+
+```{python, eval = FALSE}
+#This will save in the same folder as this qmd file.
+homes.to_csv("file-path")
+```
+
+Now, lets make some plots
+
+```{r}
+#Histogram
+homes%>%
+  ggplot(aes(x = Price))+
+  geom_histogram()+
+  labs(title = "Price Distribution of Homes", x = "Price")
+
+#Barplot
+homes%>%
+  ggplot(aes(x = Fuel.Type))+
+  geom_bar()+
+  scale_y_continuous(limits = c(0, 1500))
+
+#Scatterplot
+homes%>%
+  ggplot(aes(x = Age, y = Price, color = Central.Air, shape = as.factor(Fuel.Type)))+
+  geom_point()+
+  labs(color = "Has Central Air Conditioning?", shape = "Type of Fuel")
+```
+
+Python Equivalent:
+
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Histogram: Price Distribution of Homes
+plt.figure(figsize=(8, 6))
+sns.histplot(homes['Price'], bins=30, kde=False)
+plt.title("Price Distribution of Homes")
+plt.xlabel("Price")
+plt.ylabel("Frequency")
+plt.show()
+
+# Barplot: Count of Fuel Type
+plt.figure(figsize=(8, 6))
+sns.countplot(x='Fuel.Type', data=homes)
+plt.ylim(0, 1500)  # Equivalent to scale_y_continuous(limits = c(0, 1500))
+plt.title("Count of Homes by Fuel Type")
+plt.xlabel("Fuel Type")
+plt.ylabel("Count")
+plt.show()
+
+# Scatterplot: Age vs. Price
+plt.figure(figsize=(8, 6))
+sns.scatterplot(data=homes, x='Age', y='Price', hue='Central.Air', style='Fuel.Type', palette='viridis')
+plt.title("Price vs Age of Homes")
+plt.xlabel("Age")
+plt.ylabel("Price")
+plt.legend(title="Legend", bbox_to_anchor=(1.05, 1), loc='upper left')  # Adjust legend
+plt.tight_layout()
+plt.show()
+
+homes["Price"]
+```
+
+Straight from chatGPT!
+
+Now lets do some modeling. We'll start with a simple linear regression model
+
+```{r}
+homes_model <- lm(Price ~ as.factor(Central.Air) + Bathrooms, data = homes)
+```
+
+Python equivalent (There are many ways to do this)
+
+```{python}
+import statsmodels.api as sm
+
+# Preparing the data
+X = homes[['Central.Air', 'Bathrooms']]  # Predictor variables
+X = pd.get_dummies(X, drop_first=True)  # Convert categorical variable Central.Air to dummy variables
+X = sm.add_constant(X)  # Add a constant term (intercept)
+y = homes['Price']  # Response variable
+
+# Fitting the linear regression model
+homes_model = sm.OLS(y, X).fit()
+
+# Displaying the summary of the model
+print(homes_model.summary())
+```
+
+#Python vs R Discussion
+
+- At this point, the languages are very close in terms of their capabilities. Almost anything you want to do in Python you can do in R, and vice versa.
+- In industry, it seems like Python is more widely used.
+- Python is more well integrated into other parts of the data science pipeline
+
+Key programmatic differences
+- The %>% pipe in R is one of, I think, the best parts about programming in R. You can a large amount of tasks in quick succession in a clean and easy to read format. These functions can be from any library, which is a key distinction here. 
+- In Python, you can chain together methods (functions) using `.`, but this won't work if you are trying ot incorporate multiple libraries.
+
+#Python Libraries
+
+##Data Analysis
+
+###NumPy
+
+###Pandas
+
+##Data Viz
+
+###Matplotlib
+
+###Seaborn
+
+###Plotly
+
+##Machine Learning
+
+###Sci-Kit Learn
+
+###XG Boost
+
+###Stats Models
+
+##Deep Learning
+
+###Pytorch
+
+###Statsmodels
