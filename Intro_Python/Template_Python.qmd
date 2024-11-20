@@ -1,8 +1,11 @@
 ---
-title: "Introduction to Python Supplementary Materials"
+title: "Introduction to Python for Data Science"
 author: "Kyle Suelflow"
 number-sections: true
 number-depth: 2
+execute: 
+    warning: false 
+    message: false
 format:
   html:
     toc: true
@@ -11,7 +14,7 @@ format:
         href: https://quarto.org/docs/authoring/markdown-basics.html
 ---
 
-#Setup
+# Setup
 
 Copy and run the following code in the console:
 ```{r, eval = FALSE}
@@ -42,13 +45,13 @@ matplotlib.use("Agg", force=True)
 import matplotlib.pyplot as plt
 ```
 
-#General Tips
+# General Tips
 
-##Console
+## Console
 
 To run an interactive session of python in the console, run `reticulate::repl_python()` in the console. To switch back to R, you'll just type `exit` into the console.
 
-##Code chunks
+## Code chunks
 
 If you are running code in both python chunks and R chunks, you can pass objects back and forth using the following syntax:
 
@@ -60,13 +63,13 @@ py$data_from_python
 r.data_from_r
 ```
 
-##Python Syntax
+## Python Syntax
 
 Python is an object oriented language. Instead of using the `%>%` pipe, you'll use a `.`. 
 
 Prof. Heggeseth made this wonderful document comparing Python and R syntax. This is going to be super useful! [Google Doc](https://docs.google.com/document/d/1_fXhCk6oMYtPrOh7O9MW02fkcEEGn1_p88Ihtepz8JU/edit?tab=t.0#heading=h.rrlhanyhunle)
 
-#Example
+# Example
 
 We are going to explore various Python libraries by working through an example Data Analysis from start to finish. In addition to the new Python code, the corresponding R code will be provided too. At the bottom, there will be a bit about each package, and what each does.
 
@@ -79,6 +82,7 @@ homes <- read_csv("https://mac-stat.github.io/data/homes.csv")
 ```{python}
 import pandas as pd
 homes = pd.read_csv("homes.csv")
+# pd.read_table("https://mac-stat.github.io/data/homes.csv")
 ```
 
 We'll first explore the six main verbs from `dplyr` (mutate, filter, arrange, select, group_by, summarize). In R, we can use these verbs by running the following code:
@@ -126,14 +130,17 @@ homes["Price"].groupby(homes["Central.Air"]).mean()
 
 ```
 
-Some things to notice
+Some things to note:
+
 - A lot of brackets! This is a list in Python
 - A lot of Quotation marks! This is how you can refer to a variable/column. Using `name_df["Column name"]`
 - The `group_by` syntax is a bit different. We first list the variable we'll be doing an aggregation over (the mean, in this case), and then we group by. This is the opposite of `group_by` in R. 
 
 Again, do utilize this [guide](https://docs.google.com/document/d/1_fXhCk6oMYtPrOh7O9MW02fkcEEGn1_p88Ihtepz8JU/edit?tab=t.0#heading=h.rrlhanyhunle)!
 
-If you need to translate Python code to R (because you are more familiar with R, etc.), or if you need to write some Python code, just use ChatGPT! Copy and paste the R code above, and add the following prompt: "translate this R code to Python". You'll get virtually the exact same code as the python code above.
+If you need to translate Python code to R (because you are more familiar with R, etc.), or if you need to write some Python code, just use ChatGPT! Copy and paste the R code above, and add the following prompt: "translate this R code to Python". You'll get virtually the exact same code as the python code above. 
+
+You can also ask ChatGPT to explain Python code! This will be really helpful if you are given Python code that is already built, and you need to add onto it/understand it.
 
 Before we make some plots, lets imagine that you are working with a python script that outputs some data, but that you want to do the wrangling/cleaning/analysis in R. Here is how you can save a `pandas` `DataFrame` object to csv (or any other file type):
 
@@ -226,42 +233,133 @@ homes_model = sm.OLS(y, X).fit()
 print(homes_model.summary())
 ```
 
-#Python vs R Discussion
+# Python vs R Discussion
 
 - At this point, the languages are very close in terms of their capabilities. Almost anything you want to do in Python you can do in R, and vice versa.
 - In industry, it seems like Python is more widely used.
 - Python is more well integrated into other parts of the data science pipeline
+- Because it is a more general programming language, software engineers are also able to work well in it, which contributed to the culture of Python over R
+- Far better support for Python than R
 
 Key programmatic differences
+
 - The %>% pipe in R is one of, I think, the best parts about programming in R. You can a large amount of tasks in quick succession in a clean and easy to read format. These functions can be from any library, which is a key distinction here. 
 - In Python, you can chain together methods (functions) using `.`, but this won't work if you are trying ot incorporate multiple libraries.
+- Square brackets! Very similar to Base R in this regard.
+- Python is a general purpose language! It is not built with data analysis/statistical analysis in mind, as R was. 
+- R does lots of things under the hood that in Python you may have to specify. `tidymodels` and `lm()` are good examples of this. But, explicit customization is very prevalent and useful in `ggplot2`, which is one of the reasons that it is generally seen as much better for data visualization than `seaborn` and `matplotlib`
 
-#Python Libraries
+# Python Libraries
 
-##Data Analysis
+Here we'll go through a bit about each of these libraries in Python. These are generally seen as the most well known/widely used in Python. I'll give an analogous package(s) in R.
 
-###NumPy
+## Data Analysis
 
-###Pandas
+### NumPy
+- One of the main key features of NumPy is the NumPy Array. It is a way to store data that allows for computation to occur much faster (30x faster) than using a standard Python array. This fact means that NumPy is used under the hood by many other Python libraries like Sci-Kit learn and PyTorch.
+- There is also many mathematical and statistical functions available. 
+- Can be thought of as a library that does well in ***supporting*** other libraries more specialized applications.
+- There isn't really one package that imitates NumPy in R. If anything, Base R and its capabilities are most similar.
 
-##Data Viz
+### Pandas
+- The main library in Python for data analysis.
+- Pandas's `DataTable` is the datatype most commonly used. 
+- Brianna's [google doc](https://docs.google.com/document/d/1_fXhCk6oMYtPrOh7O9MW02fkcEEGn1_p88Ihtepz8JU/edit?tab=t.0#heading=h.rrlhanyhunle)! details many Pandas functions and their R equivalent
+- The analogous R package here is most of the `tidyverse`. So `dplyr`, `readr`, `stringr`, `purrr`, etc.
+- Base R also has similar functionality (especially with the use of [] square brackets in both!)
 
-###Matplotlib
+## Data Viz
 
-###Seaborn
+### Matplotlib
+- The basic and most popular data viz library in Python
+- Here is a good [resource](https://matplotlib.org/stable/users/explain/quick_start.html)
+- Another great article that talks about the differences between `ggplot2` and `matplotlib`: [here](https://blog.tidy-intelligence.com/posts/ggplot2-vs-matplotlib/index.html)
+- Look at the amount of code required to make the first plot in the article using `matplotlib`!
 
-###Plotly
+```{python, eval=FALSE}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from palmerpenguins import load_penguins
 
-##Machine Learning
+penguins = load_penguins().dropna()
+species_unique = sorted(penguins["species"].unique())
+markers = ["o", "s", "^"]
+colors = ["red", "green", "blue"]
 
-###Sci-Kit Learn
+for species, marker, color in zip(species_unique, markers, colors):
+  species_data = penguins[penguins["species"] == species]
+  plt.scatter(
+    species_data["bill_length_mm"], species_data["bill_depth_mm"], 
+    s = 50, alpha = 0.7, label = species, marker = marker, color = color
+  )
+    
+  X = species_data["bill_length_mm"]
+  Y = species_data["bill_depth_mm"]
+  m, b = np.polyfit(X, Y, 1)
+  plt.plot(X, m*X + b, color = color)
 
-###XG Boost
+plt.xlabel("Bill length (mm)")
+plt.ylabel("Bill width (mm)")
+plt.title("Bill length vs. bill width")
+plt.legend(title = "Species")
 
-###Stats Models
+plt.show()
+```
 
-##Deep Learning
 
-###Pytorch
+### Seaborn
+- Seaborn builds upon matplotlib. The same visualization in `matplotlib` can take much less code in Seaborn:
 
-###Statsmodels
+```{python, eval=FALSE}
+import seaborn as sns
+
+penguins = sns.load_dataset("penguins")
+
+sns.set_theme(style = "whitegrid")
+
+(sns.lmplot(
+    data = penguins,
+    x = "bill_length_mm", y = "bill_depth_mm", 
+    hue = "species", markers = ["o", "s", "^"], fit_reg = True, 
+    scatter_kws = {"s": 50}, legend = False
+  )
+  .set_axis_labels("Bill length (mm)", "Bill width (mm)")
+  .add_legend(title = "Species")
+  .fig.suptitle("Bill length vs. bill width", y = 1)
+)
+```
+
+- Seaborn seems like the better option over matplotlib. However, `matplotlib` is integrated into other libraries in Python so it is important to have an understanding of it.
+
+### Plotly
+- Plotly exists in both R and Python!
+- The purpose of Plotly remains the same in both languages: to create interactive visualizations. 
+- In Python, you'll use Plotly on its own to create interactive viz. In R, you can also do this using the `Plotly` package.
+- However, more commonly in R you'll use the `ggplotly()` function, and in one line of code, your ggplot object will become a plotly object. 
+
+## Machine Learning
+This is where most people would say Python excels, and has a more robust set of libraries and support for machine learning than R.
+
+### Sci-Kit Learn
+- This is your go-to library for machine learning in Python
+- Regression, classification, supervised and unsupervised
+
+### Stats Models
+- More focused on statistical models
+- Linear, logistic regression
+- Time series
+
+## Deep Learning
+Another area in which the common consensus is that Python is the go to language for deep learning.
+
+### Pytorch
+- Built for Python so easier to code/debug in
+- Neural Networks
+- Natural Language processing (NLP)
+- Speech Recognition
+- Computer Vision
+
+### TensorFlow
+- Similar capabilities to PyTorch
+- Here is an [article](https://medium.com/@byanalytixlabs/pytorch-vs-tensorflow-which-framework-to-choose-ed649d9e7a35) comparing the two.
