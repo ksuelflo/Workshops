@@ -237,12 +237,14 @@ print(homes_model.summary())
 # Python vs R Discussion
 
 - At this point, the languages are very close in terms of their capabilities. Almost anything you want to do in Python you can do in R, and vice versa.
-- In industry, it seems like Python is more widely used.
-- Python is more well integrated into other parts of the data science pipeline
-- Because it is a more general programming language, software engineers are also able to work well in it, which contributed to the culture of Python over R
-- Far better support for Python than R
+- In tech industry, it seems like Python is more widely used.
+    - Python is more well integrated into other parts of the software / enterprise-level data science pipeline
+    - Because it is a more general programming language, software engineers are also able to work well in it, which contributed to the culture of Python over R
+- In other industries, depends on what your co-workers are using and what you are most comfortable with.
+    - Collaboration is key, so if you are working with a team that uses R, you should use R. If most people use Python, use Python.
+    - Many companies use Excel, so using R or Python is a step towards reproducibility, automation, and efficiency.
 
-Key programmatic differences
+**Key programmatic differences**
 
 - The %>% pipe in R is one of, I think, the best parts about programming in R. You can a large amount of tasks in quick succession in a clean and easy to read format. These functions can be from any library, which is a key distinction here. 
 - In Python, you can chain together methods (functions) using `.`, but this won't work if you are trying ot incorporate multiple libraries.
