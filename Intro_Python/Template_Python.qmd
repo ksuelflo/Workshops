@@ -331,6 +331,7 @@ sns.set_theme(style = "whitegrid")
 ```
 
 - Seaborn seems like the better option over matplotlib. However, `matplotlib` is integrated into other libraries in Python so it is important to have an understanding of it.
+- Simpler code, quicker viz than matplotlib. Matplotlib allows more customization. If you want to make a plot in Python quickly that looks pretty good, use Seaborn!
 
 ### Plotly
 - Plotly exists in both R and Python!
