@@ -9,6 +9,7 @@ execute:
 format:
   html:
     toc: true
+    embed-resources: true
     other-links:
       - text: Quarto Markdown tips
         href: https://quarto.org/docs/authoring/markdown-basics.html
@@ -20,7 +21,7 @@ Copy and run the following code in the console:
 ```{r, eval = FALSE}
 install.packages("reticulate")
 reticulate::install_miniconda()
-py_install(packages = c("matplotlib", "pandas", "numpy", "seaborn", "statsmodels", "scikit-learn"))
+reticulate::py_install(packages = c("matplotlib", "pandas", "numpy", "seaborn", "statsmodels", "scikit-learn"))
 ```
 
 Load in libraries/packages
@@ -338,22 +339,32 @@ sns.set_theme(style = "whitegrid")
 - In Python, you'll use Plotly on its own to create interactive viz. In R, you can also do this using the `Plotly` package.
 - However, more commonly in R you'll use the `ggplotly()` function, and in one line of code, your ggplot object will become a plotly object. 
 
-## Machine Learning
-This is where most people would say Python excels, and has a more robust set of libraries and support for machine learning than R.
+## Modeling
+
+- Cutting-edge statistical/probabilistic models are developed and shared in R first.
+- Cutting-edge ML algorithms are developed and shared in Python first.
+
+Standard models and machine learning algorithms are available in packages/libraries for both.
 
 ### Sci-Kit Learn
+
 - This is your go-to library for machine learning in Python
 - Regression, classification, supervised and unsupervised
+- In R: `tidymodels` (which relies on individual packages for each algorithm) + `cluster` for unsupervised learning (partitioning methods) + others for model-based clustering (read Chp 1 of [Prof. Heggeseth's dissertation](https://escholarship.org/uc/item/10p932sm) for more info!)
 
 ### Stats Models
+
 - More focused on statistical models
 - Linear, logistic regression
 - Time series
+- In R: `lm()` and `glm()` in base R; `astsa`, `sarima`, and `forecast` package for time series; `geeM`for generalized estimating equations; `lme4` for mixed effects models
 
 ## Deep Learning
-Another area in which the common consensus is that Python is the go to language for deep learning.
+
+One area in which the common consensus is that Python is the go to language for deep learning.
 
 ### Pytorch
+
 - Built for Python so easier to code/debug in
 - Neural Networks
 - Natural Language processing (NLP)
@@ -361,5 +372,6 @@ Another area in which the common consensus is that Python is the go to language 
 - Computer Vision
 
 ### TensorFlow
+
 - Similar capabilities to PyTorch
 - Here is an [article](https://medium.com/@byanalytixlabs/pytorch-vs-tensorflow-which-framework-to-choose-ed649d9e7a35) comparing the two.
