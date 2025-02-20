@@ -17,11 +17,6 @@ Topics we'll cover:
 - Cleaning/wrangling data
 - Visualizing data
 
-
-What else are you interested in? What questions do you have?:
-
-[https://pollev.com/kylesuelflow774](https://pollev.com/kylesuelflow774)
-
 ## Setup
 
 1. Open RStudio 
