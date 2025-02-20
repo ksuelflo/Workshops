@@ -24,6 +24,80 @@ reticulate::install_miniconda()
 reticulate::py_install(packages = c("matplotlib", "pandas", "numpy", "seaborn", "statsmodels", "scikit-learn"))
 ```
 
+```{r}
+library(automap)
+```
+
+```{r}
+library(kableExtra)
+ECS <- c(2, 3.1, 4.5)
+Eta <- c(1.5, 1.5, 2)
+Rho <- c(0, .2, 2)
+Discount_Rate <- c(1.7, 2, 5)
+Scenario <- c("Best-Case", "State of the Knowledge", "Catastrophic")
+table <- data.frame("Scenario" = Scenario, "ECS" = ECS, "Eta" = Eta, "Rho" = Rho, "Discount Rate" = Discount_Rate)%>%
+  kbl(caption="Parameters for three unique climate scenarios to run the DICE model. ",
+      format="latex",
+      col.names = c("Scenario", "ECS", "Eta", "Rho", "Discount Rate"),
+      align="c") %>%
+  kable_minimal(full_width = F,  html_font = "Source Sans Pro")
+```
+
+
+```{r}
+GenZ <- da39%>%
+  filter(S5_AGE == "(2) 18-29")%>%
+  mutate(Q813 = )
+
+GenZ%>%
+  ggplot(aes(x = Q813, fill = Q21))+
+  geom_bar()+
+  theme(axis.text.x = element_text(angle = 90, size = 1, vjust))
+
+
+
+GenZ%>%
+  mutate(indicator_var = if_else(var == "important_category"))
+```
+
+```{r}
+library(ggplot2)
+
+# Sample data
+data <- data.frame(
+  Category = c("Very Long Category Name 1", "Another Long Category Name 2", "Third Long Category Name"),
+  Value = c(10, 20, 15)
+)
+
+# Short labels for categories
+data$ShortCategory <- c("A", "B", "C")
+
+# Create the plot
+ggplot(data, aes(x = ShortCategory, y = Value, fill = ShortCategory)) +
+  geom_bar(stat = "identity", show.legend = FALSE) + # Use short labels
+  labs(x = "Categories", y = "Value", title = "Barchart with Short Labels") +
+  scale_fill_manual(
+    values = c("A" = "blue", "B" = "red", "C" = "green"), # Define colors for consistency
+    labels = data$Category # Full names for the legend
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(fill = guide_legend(title = "Full Category Names"))
+
+
+
+  scale_x_discrete(labels = label_wrap(10)) +
+  theme(axis.text.x = element_text(size = 2))
+
+```
+
+
+
+```{r}
+
+```
+
+
 Load in libraries/packages
 ```{r}
 #Python stuff
