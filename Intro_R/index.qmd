@@ -7,6 +7,9 @@ format:
     scrollable: true
 ---
 
+## Link to slides
+
+https://ksuelflo.github.io/Workshops/Intro_R
 
 ## Goals
 
